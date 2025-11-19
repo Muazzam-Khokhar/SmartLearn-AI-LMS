@@ -1,5 +1,13 @@
 {
   "name": "smartlearn",
   "private": true,
-  "workspaces": []
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@smartlearn/api",
+    "dev:web": "npm run dev --workspace=@smartlearn/web"
+  }
 }
