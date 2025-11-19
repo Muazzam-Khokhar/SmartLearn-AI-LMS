@@ -7,7 +7,17 @@
     "packages/*"
   ],
   "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.js",
+    "format": "prettier --write .",
     "dev:api": "npm run dev --workspace=@smartlearn/api",
     "dev:web": "npm run dev --workspace=@smartlearn/web"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.47.0"
   }
 }

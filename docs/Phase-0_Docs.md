@@ -12,15 +12,15 @@ SmartLearn is a full‑stack LMS that enables instructors to publish courses and
 
 **MVP Goals:**
 
-* User Authentication (JWT) + roles (Instructor, Student)
-* Course & Lesson CRUD (Instructor)
-* Student enrollment & progress tracking
-* Lesson‑level quiz with auto grading (MCQ)
-* AI summary feature (OpenAI API)
-* Responsive frontend (React + TypeScript)
-* Backend API (Node + Express + TypeScript)
-* Database (MongoDB Atlas)
-* Deployed demo (Vercel frontend, Render backend)
+- User Authentication (JWT) + roles (Instructor, Student)
+- Course & Lesson CRUD (Instructor)
+- Student enrollment & progress tracking
+- Lesson‑level quiz with auto grading (MCQ)
+- AI summary feature (OpenAI API)
+- Responsive frontend (React + TypeScript)
+- Backend API (Node + Express + TypeScript)
+- Database (MongoDB Atlas)
+- Deployed demo (Vercel frontend, Render backend)
 
 ---
 
@@ -192,73 +192,73 @@ erDiagram
 
 ### Auth
 
-* `POST /v1/auth/register` — register user
-* `POST /v1/auth/login` — login (returns access + refresh tokens)
-* `GET /v1/auth/me` — get current user
+- `POST /v1/auth/register` — register user
+- `POST /v1/auth/login` — login (returns access + refresh tokens)
+- `GET /v1/auth/me` — get current user
 
 ### Courses
 
-* `GET /v1/courses` — list courses (filters)
-* `GET /v1/courses/:id` — course details
-* `POST /v1/courses` — create (instructor)
-* `PUT /v1/courses/:id` — update (instructor)
-* `DELETE /v1/courses/:id` — delete (instructor)
+- `GET /v1/courses` — list courses (filters)
+- `GET /v1/courses/:id` — course details
+- `POST /v1/courses` — create (instructor)
+- `PUT /v1/courses/:id` — update (instructor)
+- `DELETE /v1/courses/:id` — delete (instructor)
 
 ### Lessons
 
-* `POST /v1/courses/:courseId/lessons` — create lesson
-* `GET /v1/courses/:courseId/lessons` — list
-* `GET /v1/lessons/:id` — lesson content
+- `POST /v1/courses/:courseId/lessons` — create lesson
+- `GET /v1/courses/:courseId/lessons` — list
+- `GET /v1/lessons/:id` — lesson content
 
 ### Enrollment
 
-* `POST /v1/courses/:id/enroll` — student enrolls
-* `GET /v1/users/:id/enrollments` — user courses
+- `POST /v1/courses/:id/enroll` — student enrolls
+- `GET /v1/users/:id/enrollments` — user courses
 
 ### Quiz
 
-* `GET /v1/lessons/:id/quiz` — fetch quiz
-* `POST /v1/lessons/:id/quiz/submit` — submit answers, get score
+- `GET /v1/lessons/:id/quiz` — fetch quiz
+- `POST /v1/lessons/:id/quiz/submit` — submit answers, get score
 
 ### AI
 
-* `POST /v1/ai/summary` — { lessonId } -> returns short summary (backend calls OpenAI)
-* `POST /v1/ai/generate-quiz` — { lessonId } -> generate MCQs (optional for instructor)
+- `POST /v1/ai/summary` — { lessonId } -> returns short summary (backend calls OpenAI)
+- `POST /v1/ai/generate-quiz` — { lessonId } -> generate MCQs (optional for instructor)
 
 ---
 
 ## 7. Authentication & Security
 
-* Authentication: JWT access tokens (short lived) + refresh tokens (httpOnly cookie)
-* Passwords: bcrypt hashing (salt rounds >= 10)
-* Input Validation: use JOI / Zod for request DTO validation
-* Rate limiting: protect AI endpoints (avoid cost spikes)
-* CORS: restrict to known origins
-* Vulnerability controls: sanitize inputs, use helmet, enforce HTTPS in production
+- Authentication: JWT access tokens (short lived) + refresh tokens (httpOnly cookie)
+- Passwords: bcrypt hashing (salt rounds >= 10)
+- Input Validation: use JOI / Zod for request DTO validation
+- Rate limiting: protect AI endpoints (avoid cost spikes)
+- CORS: restrict to known origins
+- Vulnerability controls: sanitize inputs, use helmet, enforce HTTPS in production
 
 ---
 
 ## 8. Dev Tools, Linting & CI
 
-* ESLint + Prettier + Husky (pre-commit hooks)
-* TypeScript `strict` mode
-* Unit tests: Jest for backend + React Testing Library for frontend
-* E2E tests (optional): Cypress
-* CI: GitHub Actions pipeline: lint -> test -> build -> deploy
-* Secrets: GitHub Secrets for API keys (OpenAI, DB, Stripe)
+- ESLint + Prettier + Husky (pre-commit hooks)
+- TypeScript `strict` mode
+- Unit tests: Jest for backend + React Testing Library for frontend
+- E2E tests (optional): Cypress
+- CI: GitHub Actions pipeline: lint -> test -> build -> deploy
+- Secrets: GitHub Secrets for API keys (OpenAI, DB, Stripe)
 
 ---
 
 ## 9. Deployment Plan
 
-* **Frontend:** Vercel (automatic on push to `main`) — environment vars set in Vercel
-* **Backend:** Render / Railway / Heroku or a small EC2/ECS service — deploy Docker image or Node process
-* **Database:** MongoDB Atlas (free tier for dev)
-* **Vector DB (optional):** Pinecone / Milvus / Weaviate (managed)
+- **Frontend:** Vercel (automatic on push to `main`) — environment vars set in Vercel
+- **Backend:** Render / Railway / Heroku or a small EC2/ECS service — deploy Docker image or Node process
+- **Database:** MongoDB Atlas (free tier for dev)
+- **Vector DB (optional):** Pinecone / Milvus / Weaviate (managed)
 
 **CI/CD Flow:**
 
-* push -> run CI -> on main branch pass -> auto deploy frontend to Vercel and backend to Render
+- push -> run CI -> on main branch pass -> auto deploy frontend to Vercel and backend to Render
 
 ---
 
@@ -266,14 +266,14 @@ erDiagram
 
 **Phase 1 (MVP AI):**
 
-* Simple summarization using OpenAI `text-embedding` or `gpt-4`/`gpt-3.5-turbo` prompts.
-* Backend endpoint `/v1/ai/summary` reads lesson content, constructs prompt, sends to OpenAI, returns summary.
-* Add basic rate limiting and caching for repeated requests.
+- Simple summarization using OpenAI `text-embedding` or `gpt-4`/`gpt-3.5-turbo` prompts.
+- Backend endpoint `/v1/ai/summary` reads lesson content, constructs prompt, sends to OpenAI, returns summary.
+- Add basic rate limiting and caching for repeated requests.
 
 **Phase 2 (RAG):**
 
-* Chunk lesson content and create embeddings, store in vector DB.
-* For question answering, retrieve top-k chunks, build prompt with context, then call LLM.
+- Chunk lesson content and create embeddings, store in vector DB.
+- For question answering, retrieve top-k chunks, build prompt with context, then call LLM.
 
 **Cost control:** track calls, limit per-user usage, add paid plan for heavy usage.
 
@@ -281,10 +281,10 @@ erDiagram
 
 ## 11. Non-functional Requirements & Scaling
 
-* **Performance:** paginate lists, index DB fields (courseId, userId), cache frequent reads
-* **Availability:** stateless API nodes behind load balancer for scale
-* **Observability:** logs (structured), error tracking (Sentry)
-* **Backups:** snapshot MongoDB regularly
+- **Performance:** paginate lists, index DB fields (courseId, userId), cache frequent reads
+- **Availability:** stateless API nodes behind load balancer for scale
+- **Observability:** logs (structured), error tracking (Sentry)
+- **Backups:** snapshot MongoDB regularly
 
 ---
 
@@ -302,14 +302,14 @@ Total MVP estimate (part‑time): 8–12 weeks
 
 ## 13. Checklist (Phase 0 Completion)
 
-* [ ] Repo created & monorepo skeleton
-* [ ] `apps/api` stub (TS + Express) committed
-* [ ] `apps/web` stub (React + TS) committed
-* [ ] `packages/shared` created for types
-* [ ] `docs/architecture.md` (this file) added
-* [ ] `docs/erd.md` with Mermaid diagram added
-* [ ] ESLint + Prettier configuration added
-* [ ] CI workflow skeleton added
+- [ ] Repo created & monorepo skeleton
+- [ ] `apps/api` stub (TS + Express) committed
+- [ ] `apps/web` stub (React + TS) committed
+- [ ] `packages/shared` created for types
+- [ ] `docs/architecture.md` (this file) added
+- [ ] `docs/erd.md` with Mermaid diagram added
+- [ ] ESLint + Prettier configuration added
+- [ ] CI workflow skeleton added
 
 ---
 
@@ -317,10 +317,10 @@ Total MVP estimate (part‑time): 8–12 weeks
 
 Start building the **backend skeleton**:
 
-* Initialize `apps/api` with TypeScript config
-* Add basic Express server and `/v1/health` route
-* Setup environment variables and `.env.example`
-* Create `users` model (Mongoose) and connect to MongoDB Atlas
+- Initialize `apps/api` with TypeScript config
+- Add basic Express server and `/v1/health` route
+- Setup environment variables and `.env.example`
+- Create `users` model (Mongoose) and connect to MongoDB Atlas
 
 ---
 
