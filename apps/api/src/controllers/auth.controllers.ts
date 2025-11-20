@@ -22,6 +22,7 @@ export const register = async (req: Request,res:Response)=>{
       })
       res.json({message:"User Register Successfully...!"})
   } catch (error) {
+    
     res.status(500).json({error})
   }
 }
