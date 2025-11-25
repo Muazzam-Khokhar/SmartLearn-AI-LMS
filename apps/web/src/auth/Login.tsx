@@ -27,7 +27,7 @@ export default function login (){
         <input type="password" className="w-full p-2 mb-2" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button className="w-full bg-blue-600 text-white p-2">Login</button>
       </form>
-    </div>
+    </div>  
   );
 }
 
