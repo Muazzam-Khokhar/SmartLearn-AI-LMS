@@ -17,6 +17,7 @@ dotenv.config({ debug: true });
 app.get('/',(req,res)=>{
   res.json({message:"First Api for smartlearning"})
 })
+app.use("/api/auth",authRouter);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRouter);
 app.get("/api/protected", authMiddleware, (req, res) => {

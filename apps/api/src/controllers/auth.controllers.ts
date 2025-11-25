@@ -48,3 +48,15 @@ export const login = async (req:Request, res:Response)=>{
     res.status(500).json({error,message:"error accoured"})
   }
 }
+export const me =  async(req:Request & { user?: { id: string; role: string } },res:Response)=>{
+  try {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+
+    const user = await User.findById(req.user.id).select("-password"); // exclude password
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+}

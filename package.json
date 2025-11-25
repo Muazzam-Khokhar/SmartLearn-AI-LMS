@@ -13,6 +13,7 @@
     "dev:web": "npm run dev --workspace=@smartlearn/web"
   },
   "devDependencies": {
+    "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
