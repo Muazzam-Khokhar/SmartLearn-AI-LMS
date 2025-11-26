@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "./useAuth"
+import animationData from '../assets/animations/login_signup_animation.json'
+import Lottie from "lottie-react";
+import { FiUser } from "react-icons/fi";
+import { BsFillKeyFill , BsEyeFill, BsEyeSlashFill  } from "react-icons/bs";
+
+
+
 
 export default function login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const [err, setErr] = useState("");
 
   const submit = async (e: React.FormEvent) => {
@@ -18,21 +26,27 @@ export default function login() {
       setErr(error?.response?.data?.message || "Login Failed")
     }
   }
+  const togglePassword = ()=>setShowPassword(!showPassword)
   return (
   <div className="w-full h-screen flex">
 
-    {/* LEFT SIDE VISUAL */}
-    <div className="w-1/2 h-full bg-gradient-to-br from-emerald-300 via-teal-400 to-emerald-700 flex items-center justify-center">
+    <div className="w-1/2 h-full pb-40 bg-linear-to-br from-emerald-400 via-teal-500 to-emerald-700 flex flex-col items-center justify-center">
       <h1 className="text-5xl font-extrabold text-white drop-shadow-xl">
         Welcome Back
       </h1>
+      <div className="w-72 h-72 md:h-32">
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoplay={true}
+        />
+      </div>
     </div>
 
-    {/* RIGHT SIDE - LOGIN */}
     <div className="w-1/2 h-full bg-emerald-950 flex items-center justify-center p-6">
-      <div className="bg-white/10 backdrop-blur-lg p-10 rounded-2xl shadow-2xl w-full max-w-sm border border-white/20">
+      <div className="bg-white/10 backdrop-blur-lg p-10 py-18 space-y-12 rounded-2xl shadow-2xl w-full max-w-lg border border-white/20">
 
-        <h2 className="text-3xl font-bold mb-6 text-center text-white">
+        <h2 className="text-5xl font-bold mb-10 text-center text-white">
           Login
         </h2>
 
@@ -43,20 +57,36 @@ export default function login() {
         )}
 
         <form onSubmit={submit}>
+          <div className=" relative mb-12">
+          <FiUser className=" absolute left-3 top-1/2 -translate-y-1/2 text-white/70 text-xl" />
           <input
-            className="w-full p-3 mb-4 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none border border-white/20 focus:border-emerald-300 focus:bg-white/30 transition"
+            className="w-full p-2 pl-12 mt-1 border-0  text-white placeholder-gray-300 outline-none border-b-4 border-white/20 focus:border-emerald-300 focus:bg-white/30 transition bg-transparent"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder="Enter email"
           />
-
+          </div>
+          <div className=" relative mb-12">
+          <BsFillKeyFill className="absolute left-3 top-1/2 -translate-y-1/2 text-white/70 text-xl"/>
           <input
-            type="password"
-            className="w-full p-3 mb-4 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none border border-white/20 focus:border-emerald-300 focus:bg-white/30 transition"
+            type={showPassword?'text':'password'}
+            className="w-full p-2 pl-12 mt-1 border-0  text-white placeholder-gray-300 outline-none border-b-4 border-white/20 focus:border-emerald-300 focus:bg-white/30 transition bg-transparent"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
+            placeholder="Enter password"
+            />
+            {showPassword ? (
+              <BsEyeFill
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 text-xl cursor-pointer"
+                onClick={togglePassword}
+              />
+            ) : (
+              <BsEyeSlashFill
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 text-xl cursor-pointer"
+                onClick={togglePassword}
+              />
+            )}
+            </div>
 
           <button
             className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold p-3 rounded-lg shadow-md transition-all"
@@ -67,7 +97,7 @@ export default function login() {
 
         <p className="text-gray-300 text-center mt-6 text-sm">
           Don't have an account?{" "}
-          <span className="text-emerald-300 hover:underline cursor-pointer">
+          <span className="text-emerald-300 hover:underline cursor-pointer" onClick={()=>navigate("/register")}>
             Sign up
           </span>
         </p>
