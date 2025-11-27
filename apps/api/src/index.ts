@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import userRoutes from "./routes/user.routes.js";
 import { authMiddleware } from './middleware/auth.js';
 import authRouter from "./routes/auth.routes.js";
+import testAuthRoutes from "./routes/testAuth.routes.js";
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,7 @@ app.get("/api/protected", authMiddleware, (req, res) => {
   });
 });
 app.use('/v1/health', healthRoutes);
+app.use("/api/test", testAuthRoutes);
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || '';
 

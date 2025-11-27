@@ -18,11 +18,11 @@ export const register = async (req: Request,res:Response)=>{
         name,
         email,
         password:hashPassword,
-        role
+        role : role || "student"
       })
-      res.json({message:"User Register Successfully...!"})
+      res.json({message:"User Register Successfully...!",user:{id:user._id,email:user.email,role:user.role}})
   } catch (error) {
-    res.status(500).json({error})
+    return res.status(500).json({ message: "Error registering user", error })
   }
 }
 
