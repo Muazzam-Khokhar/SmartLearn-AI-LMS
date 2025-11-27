@@ -7,6 +7,8 @@ import userRoutes from "./routes/user.routes.js";
 import { authMiddleware } from './middleware/auth.js';
 import authRouter from "./routes/auth.routes.js";
 import testAuthRoutes from "./routes/testAuth.routes.js";
+import courseRouter from "./routes/course.routes.js";
+
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,7 @@ app.get('/',(req,res)=>{
 app.use("/api/auth",authRouter);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRouter);
+app.use("/api/courses",courseRouter);
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({
     message: "You accessed a protected route",

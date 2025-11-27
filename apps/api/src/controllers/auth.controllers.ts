@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import User from "../models/User.js";
 import bcrypt from 'bcrypt';
 import Jwt  from "jsonwebtoken";
+import { generateToken } from "../utils/generateToken.js";
+
 
 
 
@@ -37,11 +39,7 @@ export const login = async (req:Request, res:Response)=>{
     if(!user) return res.status(400).json({message:"Incorrect Email Address"})
     const valid = await bcrypt.compare(password,user.password)
     if(!valid) return res.status(400).json({message:"Invalid User Password"})
-    const token = Jwt.sign(
-      {id:user._id, role:user.role},
-      process.env.JWT_SECRET ||"",
-      { expiresIn:"7d"}
-    );
+    const token = generateToken(user);
 
     res.json({message:"User Login Successfully",token})
   } catch (error) {
