@@ -8,6 +8,9 @@ import { authMiddleware } from './middleware/auth.js';
 import authRouter from "./routes/auth.routes.js";
 import testAuthRoutes from "./routes/testAuth.routes.js";
 import courseRouter from "./routes/course.routes.js";
+import lessonRouter from './routes/lesson.routes.js'
+import path from 'path';
+
 
 dotenv.config();
 
@@ -24,6 +27,8 @@ app.use("/api/auth",authRouter);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRouter);
 app.use("/api/courses",courseRouter);
+app.use("/upload",express.static(path.join(process.cwd(),"uploads")))
+app.use("/api",lessonRouter)
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({
     message: "You accessed a protected route",

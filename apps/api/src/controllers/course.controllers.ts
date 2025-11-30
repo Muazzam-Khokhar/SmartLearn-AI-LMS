@@ -18,8 +18,18 @@ export const createCourse = async(req:Request & {user?: {id:string,role:string}}
 }
 export const getAllCourse = async(req:Request,res:Response)=>{
   try {
-    const courses = await Course.find().populate("CreatedBy","name email role");
+    const courses = await Course.find().populate("createdBy","name email role");
     res.json(courses)
+  } catch (error) {
+    res.status(500).json({message:"Error fetching courses",error})
+  }
+}
+export const getSingleCourse = async (req:Request,res:Response)=>{
+  try {
+    const { id } = req.params;
+    const course = await Course.findById(id).populate("createdBy","name email role");
+    if(!course) return res.status(404).json({message:"No Course found...!"})
+    res.json(course)
   } catch (error) {
     res.status(500).json({message:"Error fetching courses",error})
   }
