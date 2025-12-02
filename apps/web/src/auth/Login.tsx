@@ -20,7 +20,7 @@ export default function login() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      const user = await login(email, password);
       navigate("/dashboard");
     } catch (error) {
       setErr(error?.response?.data?.message || "Login Failed")
