@@ -21,7 +21,10 @@ export default function login() {
     e.preventDefault();
     try {
       const user = await login(email, password);
-      navigate("/dashboard");
+      console.log(user);
+      if(user.role==="admin") navigate("/admin");
+      if(user.role==="teacher") navigate("/teacher");
+      else navigate("/student");
     } catch (error) {
       setErr(error?.response?.data?.message || "Login Failed")
     }

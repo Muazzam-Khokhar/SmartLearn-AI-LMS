@@ -36,8 +36,10 @@ export default function Register() {
     }
 
     try {
-      await register(email, password, name, role);
-      navigate("/dashboard");
+      const user = await register(email, password, name, role);
+      if(user.role==="admin") navigate("/admin");
+      if(user.role==="teacher") navigate("/teacher");
+      else navigate("/student");
     } catch (error: any) {
       setErr(error?.response?.data?.message || "Register Failed");
     }

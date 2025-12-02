@@ -32,6 +32,7 @@ export const AuthProvider = ({children}: {children:ReactNode})=>{
 
     const me = await api.get("/api/auth/me");
     setUser(me.data.user)
+    return user
   }
   const register = async (email:string,password:string,name:string,role:string)=>{
     await api.post("/api/auth/register",{email,password,name,role})
